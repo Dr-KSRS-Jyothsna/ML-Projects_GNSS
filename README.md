@@ -16,7 +16,7 @@ multipath, NLOS conditions, and signal anomalies.
 - Scikit-learn
 - Jupyter Notebook
 
-- ## Objective
+## Objective
 To demonstrate the integration of GNSS domain knowledge with Machine
 Learning techniques for research and industry-oriented applications.
 
