@@ -1,9 +1,13 @@
 # GNSS Signal Processing using Machine Learning
 
-This repository demonstrates the application of **Machine Learning techniques** to
-**Global Navigation Satellite System (GNSS) signal processing**, focusing on improving
-navigation reliability under challenging conditions such as **multipath interference,
-Non-Line-of-Sight (NLOS) propagation, and signal anomalies**.
+This repository addresses GNSS signal processing at the **measurement and observable level**, including:
+
+- **GNSS signal quality analysis (LOS, Multipath, NLOS)**
+- Feature engineering from GNSS observables
+- Supervised Machine Learning for signal classification
+- GNSS trajectory visualization from field experiments
+- **GNSS steganography and covert data embedding**
+- Performance evaluation using statistical and signal-domain metrics
 
 The project showcases an **end-to-end data science workflow**, integrating
 domain-specific GNSS knowledge with modern machine learning methodologies.
@@ -36,7 +40,7 @@ domain-specific GNSS knowledge with modern machine learning methodologies.
 - **Programming Language:** Python  
 - **Libraries:** NumPy, Pandas, Scikit-learn  
 - **Environment:** Jupyter Notebook  
-- **Techniques:** Signal Processing, Feature Engineering, Supervised Learning  
+- **Techniques:** Signal Processing, Feature Engineering, Supervised Learning, GNSS Setganography 
 
 ## Objective
 
