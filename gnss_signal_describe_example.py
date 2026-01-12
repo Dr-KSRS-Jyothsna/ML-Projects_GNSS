@@ -1,66 +1,120 @@
 """
-File: gnss_signal_describe_example.py
+File: gnss_signal_complete_eda.py
 Author: Dr. K. S. R. S. Jyothsna
 Description:
-This program demonstrates the use of Pandas describe() function
-on sample GNSS signal-related data for exploratory data analysis (EDA).
+Complete Exploratory Data Analysis (EDA) of GNSS signal data using
+Pandas describe() and multiple Seaborn visualizations with
+customized colors and styles.
 """
 
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# --------------------------------------------------
+# Global Seaborn style
+# --------------------------------------------------
+sns.set(style="whitegrid")
 
 # --------------------------------------------------
 # 1. Create Sample GNSS / Signal Dataset
 # --------------------------------------------------
 data = {
-    "Satellite_ID": ["G01", "G02", "G03", "G04", "G05"],
-    "SNR_dB": [45.2, 38.5, 42.0, 30.8, 47.1],
-    "Pseudorange_m": [20200000, 20185000, 20215000, 20150000, 20230000],
-    "Doppler_Hz": [-1200.5, -1150.3, -1180.0, -1305.7, -1100.2],
-    "Elevation_deg": [60, 45, 55, 30, 70]
+    "Satellite_ID": ["G01", "G02", "G03", "G04", "G05", "G06"],
+    "SNR_dB": [45.2, 38.5, 42.0, 30.8, 47.1, 35.6],
+    "Pseudorange_m": [20200000, 20185000, 20215000, 20150000, 20230000, 20190000],
+    "Doppler_Hz": [-1200.5, -1150.3, -1180.0, -1305.7, -1100.2, -1250.4],
+    "Elevation_deg": [60, 45, 55, 30, 70, 40]
 }
 
 df = pd.DataFrame(data)
 
 print("GNSS Signal Dataset:")
 print(df)
-
-print("-" * 70)
+print("-" * 90)
 
 # --------------------------------------------------
-# 2. describe() on Numerical GNSS Parameters
+# 2. Statistical Summary using describe()
 # --------------------------------------------------
-print("Statistical Summary of GNSS Signal Parameters:")
+print("Statistical Summary using describe():")
 print(df.describe())
-
-print("-" * 70)
-
-# --------------------------------------------------
-# 3. describe() on Categorical Data (Satellite ID)
-# --------------------------------------------------
-print("Summary of Satellite IDs:")
-print(df.describe(include="object"))
-
-print("-" * 70)
+print("-" * 90)
 
 # --------------------------------------------------
-# 4. Parameter-wise describe()
+# 3. Box Plot – SNR Distribution (Green)
 # --------------------------------------------------
-print("SNR Statistics:")
-print(df["SNR_dB"].describe())
-
-print("-" * 70)
-
-print("Pseudorange Statistics:")
-print(df["Pseudorange_m"].describe())
-
-print("-" * 70)
+plt.figure(figsize=(6, 4))
+sns.boxplot(y="SNR_dB", data=df, color="lightgreen")
+plt.title("SNR Distribution (Box Plot)")
+plt.ylabel("SNR (dB)")
+plt.show()
 
 # --------------------------------------------------
-# 5. Practical GNSS Insights from describe()
+# 4. Histogram – Elevation Angle Distribution (Purple)
 # --------------------------------------------------
-print("GNSS Insights:")
-print("• Average SNR (dB):", df["SNR_dB"].mean())
-print("• Minimum Elevation (deg):", df["Elevation_deg"].min())
-print("• Maximum Elevation (deg):", df["Elevation_deg"].max())
-print("• Doppler Range (Hz):",
-      df["Doppler_Hz"].min(), "to", df["Doppler_Hz"].max())
+plt.figure(figsize=(6, 4))
+sns.histplot(df["Elevation_deg"],
+             bins=6,
+             kde=True,
+             color="purple")
+plt.title("Elevation Angle Distribution")
+plt.xlabel("Elevation Angle (degrees)")
+plt.show()
+
+# --------------------------------------------------
+# 5. Scatter Plot – Elevation vs SNR (Red)
+# --------------------------------------------------
+plt.figure(figsize=(6, 4))
+sns.scatterplot(x="Elevation_deg",
+                y="SNR_dB",
+                data=df,
+                color="red",
+                s=120)
+plt.title("SNR vs Elevation Angle")
+plt.xlabel("Elevation (degrees)")
+plt.ylabel("SNR (dB)")
+plt.show()
+
+# --------------------------------------------------
+# 6. Scatter Plot – Doppler vs Pseudorange (Orange)
+# --------------------------------------------------
+plt.figure(figsize=(6, 4))
+sns.scatterplot(x="Doppler_Hz",
+                y="Pseudorange_m",
+                data=df,
+                color="orange",
+                s=120)
+plt.title("Doppler vs Pseudorange")
+plt.xlabel("Doppler (Hz)")
+plt.ylabel("Pseudorange (m)")
+plt.show()
+
+# --------------------------------------------------
+# 7. Scatter Plot – Satellite-wise Coloring (Hue)
+# --------------------------------------------------
+plt.figure(figsize=(6, 4))
+sns.scatterplot(x="Elevation_deg",
+                y="SNR_dB",
+                hue="Satellite_ID",
+                palette="Set2",
+                data=df,
+                s=120)
+plt.title("SNR vs Elevation (Satellite-wise)")
+plt.xlabel("Elevation (degrees)")
+plt.ylabel("SNR (dB)")
+plt.show()
+
+# --------------------------------------------------
+# 8. Correlation Heatmap (Coolwarm)
+# --------------------------------------------------
+plt.figure(figsize=(6, 4))
+sns.heatmap(
+    df[["SNR_dB", "Pseudorange_m", "Doppler_Hz", "Elevation_deg"]].corr(),
+    annot=True,
+    cmap="coolwarm",
+    linewidths=0.5
+)
+plt.title("Correlation Heatmap of GNSS Parameters")
+plt.show()
+
+print("GNSS EDA completed with statistical summary and multiple visualizations.")
